@@ -7,6 +7,12 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for, s
 from dotenv import load_dotenv
 from cryptography.fernet import Fernet
 from module.state_cache import get_cached_state, call_service, start_cache_updater
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Use logger.info(), logger.error(), etc., throughout your code
 
 start_cache_updater()
 
@@ -160,6 +166,15 @@ def config():
         return redirect(url_for('home'))
     
     return render_template('config.html')
+
+# === Error Handlers ===
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 
 # === Entry Point ===
