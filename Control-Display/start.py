@@ -22,10 +22,10 @@ load_dotenv()
 
 # Generate or load Fernet key
 KEY = os.getenv('FLASK_SECRET_KEY')
-HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
+HASS_TOKEN = os.getenv("HA_TOKEN")
 HASS_API = os.getenv("HASS_API", "http://host.docker.internal:8123/api")
 if not HASS_TOKEN:
-    print("⚠️  Missing Home Assistant token. Please set the SUPERVISOR_TOKEN environment variable.")
+    print("⚠️  Missing Home Assistant token. Please set the HA_TOKEN environment variable.")
     sys.exit(1)
 
 if not KEY:
@@ -43,7 +43,7 @@ SECRET_KEY = KEY
 # No Custom Decorators Yet
 
 # === Flask App Initialization ===
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.secret_key = SECRET_KEY
 
 

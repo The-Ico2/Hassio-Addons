@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet" />
     
     {% for css_file in get_css_files() %}
-    <link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}?v=1.0.0" />
     {% endfor %}
 
     {% for js_file in get_js_files() %}

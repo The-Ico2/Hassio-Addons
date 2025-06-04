@@ -1,14 +1,27 @@
 <!-- templates/partials/climate_control.html -->
 <div class="control climate-control" data-entity="{{ climate.entity_id }}">
   <h3>{{ climate.name }}</h3>
+  
   <div>
-    Current: {{ climate.state }}° |
-    Target: 
-    <input type="number" min="60" max="90" step="1"
-           value="{{ climate.target_temp }}"
-           onchange="setClimateTemp('{{ climate.entity_id }}', this.value)">
+    <label for="target-{{ climate.entity_id }}">
+      Current: {{ climate.state }}° | Target:
+    </label>
+    <input
+      type="number"
+      id="target-{{ climate.entity_id }}"
+      min="60"
+      max="90"
+      step="1"
+      value="{{ climate.target_temp }}"
+      onchange="setClimateTemp('{{ climate.entity_id }}', this.value)"
+    >
   </div>
-  <select onchange="setClimateMode('{{ climate.entity_id }}', this.value)">
+
+  <label for="mode-{{ climate.entity_id }}">HVAC Mode:</label>
+  <select
+    id="mode-{{ climate.entity_id }}"
+    onchange="setClimateMode('{{ climate.entity_id }}', this.value)"
+  >
     {% for mode in climate.modes %}
       <option value="{{ mode }}" {% if climate.mode == mode %}selected{% endif %}>{{ mode }}</option>
     {% endfor %}
