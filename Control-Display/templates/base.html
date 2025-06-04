@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta data-css-var="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet" />
+    
+    {% for css_file in get_css_files() %}
+    <link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}" />
+    {% endfor %}
+
+    {% for js_file in get_js_files() %}
+    <script src="{{ url_for('static', filename=js_file) }}" defer></script>
+    {% endfor %}
+
+    <title>You Shouldnt Be Able To See This</title>
+</head>
+<body>
+    <content>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        <nav class="control">
+            <a class="selector {{ val1 }}" id="option1" href="{{ url_for('home') }}" data-sound="ping">
+                <img src="{{ url_for('static', filename='media/images/icon/home.png') }}" alt="Home" />
+            </a>
+            <a class="selector {{ val2 }}" id="option2" href="{{ url_for('lights') }}" data-sound="click">
+                <img src="{{ url_for('static', filename='media/images/icon/lights.png') }}" alt="Lights" />
+            </a>
+            <a class="selector {{ val3 }}" id="option3" href="{{ url_for('climate') }}" data-sound="error">
+                <img src="{{ url_for('static', filename='media/images/icon/climate.png') }}" alt="Climate" />
+            </a>
+            <a class="selector {{ val4 }}" id="option4" href="{{ url_for('settings') }}" data-sound="alert">
+                <img src="{{ url_for('static', filename='media/images/icon/settings.png') }}" alt="Settings" />
+            </a>
+        </nav>
+
+    </content>
+</body>
+</html>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>

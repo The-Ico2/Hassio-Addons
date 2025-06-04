@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for light in lights %}
+        {% include "partials/light_control.html" %}
+    {% endfor %}
+
+{% endblock %}
+
+<script>
+    function toggleLight(id) {
+    fetch("/api/toggle", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({entity_id: id})
+    }).then(res => res.json()).then(data => {
+        if (data.success) {
+        location.reload();
+        } else {
+        alert("Failed to toggle " + id);
+        }
+    });
+    }
+</script>

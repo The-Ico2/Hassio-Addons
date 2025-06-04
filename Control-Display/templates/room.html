@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST">
+  <label for="room">Select a Room:</label>
+  <select name="room" id="room">
+    <option value="all">All Rooms</option>
+    {% for room in rooms %}
+      <option value="{{ room.path }}">{{ room.title }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Continue</button>
+</form>
+
+{% endblock %}

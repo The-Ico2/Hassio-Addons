@@ -1,0 +1,9 @@
+<!-- templates/partials/light_control.html -->
+<div class="control light-control" data-entity="{{ light.entity_id }}">
+  <h3>{{ light.name }}</h3>
+  <button onclick="toggleEntity('{{ light.entity_id }}')">
+    {{ 'ON' if light.state == 'on' else 'OFF' }}
+  </button>
+  <input type="range" min="0" max="255" value="{{ light.brightness or 128 }}"
+         onchange="setLightBrightness('{{ light.entity_id }}', this.value)">
+</div>

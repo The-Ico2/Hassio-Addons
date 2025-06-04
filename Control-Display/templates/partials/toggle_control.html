@@ -1,0 +1,7 @@
+<!-- templates/partials/toggle_control.html -->
+<div class="control toggle-control" data-entity="{{ device.entity_id }}">
+  <h3>{{ device.name }}</h3>
+  <button onclick="toggleEntity('{{ device.entity_id }}')">
+    {{ 'ON' if device.state == 'on' else 'OFF' }}
+  </button>
+</div>
