@@ -1,32 +1,16 @@
-# syntax=docker/dockerfile:1
+ARG BUILD_FROM=python:3.12-slim
+FROM $BUILD_FROM
 
-FROM python:3.11-slim
+# Install necessary packages
+RUN pip install -r requirements.txt
 
-# Set environment variables
-ENV LANG C.UTF-8
-ENV PYTHONUNBUFFERED=1
-
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        build-essential \
-        libffi-dev \
-        libssl-dev \
-        && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Set work directory
+# Copy your application files
+COPY . /app
 WORKDIR /app
 
-# Copy add-on files
-COPY . /app
+# Make run.sh executable
+RUN chmod a+x /app/run.sh
+CMD [ "app/run.sh" ]
 
-# Install Python dependencies if requirements.txt exists
-RUN if [ -f requirements.txt ]; then pip install --no-cache-dir -r requirements.txt; fi
-
-# Expose port if your add-on uses one (change 8080 if needed)
-EXPOSE 8080
-
-# Set the default command (update as needed)
-CMD ["python", "start.py"]
+# Expose the port your application runs on
+EXPOSE 5000

@@ -1,0 +1,43 @@
+name: Control Display
+version: "1.0"
+slug: control_display
+description: A Flask-based control panel for Home Assistant
+startup: application
+boot: auto
+host_network: true
+options: {}
+schema: {}
+services:
+  control_display:
+    image: ghcr.io/home-assistant/addons/control-display:latest
+    container_name: control_display
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=${TZ}
+      - HA_URL=${HA_URL}
+      - HA_TOKEN=${HA_TOKEN}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/docker/volumes/control_display_config:/config
+    ports:
+      - "5000:5000"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - "io.hass.addon=true"
+      - "io.hass.addon.slug=control_display"
+      - "io.hass.addon.version=1.0"
+      - "io.hass.addon.arch=amd64,armv7,armhf,arm64"
+      - "io.hass.addon.description=A Flask-based control panel for Home Assistant"
+      - "io.hass.addon.homeassistant=true"
+      - "io.hass.addon.network_mode=host"
+      - "io.hass.addon.ports=5000"
